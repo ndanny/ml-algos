@@ -30,8 +30,8 @@ def co_det(y1, y2):
 
 if __name__ == '__main__':
     # Declare x, y, m, b and regression_line
-    x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], dtype = np.float64)
-    y = np.array([2, 4, 5, 8, 1, 12, 14, 25, 15, 20], dtype = np.float64)
+    x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], dtype=np.float64)
+    y = np.array([2, 4, 5, 8, 1, 12, 14, 25, 15, 20], dtype=np.float64)
     m = best_fit_slope(x, y)
     b = best_fit_yint(x, y)
     regression_line = [((m * i) + b) for i in x]
