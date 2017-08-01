@@ -1,6 +1,9 @@
 import warnings
 import numpy as np
+import pandas as pd
+import random
 from collections import Counter
+from time import time
 
 def euclidean_distance(x, y):
     """Calculates the euclidean distance between two points x and y.
@@ -29,8 +32,49 @@ def k_nearest_neighbors(dataset, sample, k=3):
     return Counter(closest_k).most_common(1)[0][0]
 
 if __name__ == '__main__':
-    test_dataset = {'p': [[1, 2], [2, 3], [3, 1]], 'r': [[6, 5], [7, 7], [8, 6]]}
-    test_sample = [5, 7]
+    # Start timer right before loading the breast cancer data
+    start_time = time()
 
-    print('Your test sample', test_sample, 'is classified as', end=' ')
-    print(k_nearest_neighbors(test_dataset, test_sample))
+    # Create and modify a dataframe that reads the breast cancer data
+    df = pd.read_csv('breast-cancer-wisconsin.data')
+    df.replace('?', -99999, inplace=True)
+    df.drop(['id'], 1, inplace=True)
+
+    # Convert column entries to type float and shuffle list elements
+    df_float = df.astype(float).values.tolist()
+    random.shuffle(df_float)
+
+    # Create a set to train (80% of data) and a set to test (20% of data)
+    # Class labels are: 2 for benign and 4 for malignant
+    train_set = {2.0: [], 4.0: []}
+    test_set = {2.0: [], 4.0: []}
+
+    train_data = df_float[:int(len(df_float) * .8)]
+    test_data = df_float[int(len(df_float) * .8):]
+
+    for i in train_data:
+        train_set[i[-1]].append(i[:-1])
+
+    for j in test_data:
+        test_set[j[-1]].append(j[:-1])
+
+    # Determine the accuracy/score of our test set
+    score, total = 0, len(test_data)
+
+    for group in test_set:
+        for entry in test_set[group]:
+            if k_nearest_neighbors(train_set, entry, k=5) == group:
+                score = score + 1
+
+    print('Total Correct:', score)
+    print('Total Test Size:', total)
+    print('Accuracy:', score/total)
+    print('Total Time Taken:', time() - start_time)
+
+
+
+
+
+
+
+
