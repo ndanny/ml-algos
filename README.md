@@ -1,1 +1,1 @@
-This repository is for simple yet intriguing examples of modern machine learning code.
+This repository is for simple yet intriguing examples of modern machine learning code, datasets and mathematics.
