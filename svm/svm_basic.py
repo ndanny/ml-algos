@@ -1,10 +1,10 @@
 import numpy as np
-import plot_decision_regions
 import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.svm import SVC
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from plot_decision_regions import plot_decision_regions
 
 # Disable warnings
 import warnings
